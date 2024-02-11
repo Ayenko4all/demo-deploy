@@ -23,7 +23,7 @@ class AuthenticationController extends Controller
     {
         $user = User::where('email', $request->validated('email'))->first();
 
-        if (! $user || ! Hash::check($request->input('password'), $user->password ?? null)) {
+        if (! $user || ! Hash::check($request->input('password'), $user->password)) {
             throw ValidationException::withMessages(['message' => trans('auth.failed')]);
         }
 
