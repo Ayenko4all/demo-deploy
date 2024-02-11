@@ -6,7 +6,6 @@ use App\Http\Requests\ResetPasswordRequest;
 use App\Models\Token;
 use App\Models\User;
 use App\Notifications\ResetPasswordNotification;
-use App\Options\TokenTypes;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -24,7 +23,7 @@ class ResetPasswordController extends Controller
         /** @var User $user */
         $user = User::query()
             ->where('email', $request->validated('email'))
-            ->firstOrFail();
+            ->first();
 
         $user->update(['password' => Hash::make($request->validated('password'))]);
 
@@ -32,6 +31,7 @@ class ResetPasswordController extends Controller
 
         Token::deleteToken("password", $request->validated('email'));
 
+        /* uncomment to send a notification to mail */
         //$user->notify(new ResetPasswordNotification());
 
         return response()->json(['message' => 'Password reset successfully']);

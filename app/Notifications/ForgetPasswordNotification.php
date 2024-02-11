@@ -2,25 +2,29 @@
 
 namespace App\Notifications;
 
+use App\Models\Token;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Lang;
 
-class ResetPasswordNotification extends Notification
+class ForgetPasswordNotification extends Notification implements ShouldQueue
 {
     use Queueable;
+
+    private $token;
 
     /**
      * Create a new notification instance.
      *
-     * @return void
+     * @param Token $token
      */
-    public function __construct()
+    public function __construct(Token $token)
     {
-        //
+        $this->token = $token;
     }
+
 
     /**
      * Get the notification's delivery channels.
@@ -43,9 +47,9 @@ class ResetPasswordNotification extends Notification
     {
         return (new MailMessage())
             ->subject(Lang::get('Reset Password Notification'))
-            ->greeting("Hello {$notifiable->first_name},")
-            ->line(Lang::get('The password of your account has been reset successfully.'))
-            ->line('Thank you for using our application!');
+            ->line(Lang::get('You are receiving this email because we received a password reset request for your account.'))
+            ->line(Lang::get('Your password reset token is **:token**. It expires in 3 hours time.', ['token' => $this->token->token]))
+            ->line(Lang::get('If you did not request a password reset, no further action is required.'));
     }
 
     /**

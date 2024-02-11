@@ -21,8 +21,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('v1')->group( function () {
-
-
     Route::group(['middleware' => 'guest'], function() {
         Route::post('tokens', SendVerificationTokenController::class)->name('tokens');
         Route::post('register', RegistrationController::class)->name('register');

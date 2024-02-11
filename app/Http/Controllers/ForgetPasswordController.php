@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Token;
 use App\Models\User;
-use App\Options\TokenTypes;
+use App\Notifications\ForgetPasswordNotification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -37,6 +37,9 @@ class ForgetPasswordController extends Controller
             'token' => generateToken(),
             'type'  => 'password',
         ]);
+
+        /* uncomment to send a notification to mail */
+//        $user->notify(new ForgetPasswordNotification($token));
 
         return response()->json(['message' => 'Password reset token sent successfully']);
     }
