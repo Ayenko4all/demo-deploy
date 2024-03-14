@@ -2,9 +2,9 @@ name: Deploy to docker hub
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "deploy-to-aws"]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "deploy-to-aws" ]
 
 jobs:
   laravel-tests:
@@ -26,8 +26,4 @@ jobs:
       - name: Execute tests via PHPUnit
         working-directory: ./
         run: vendor/bin/phpunit
-      - run: docker build --target app -t ayenko4all/php-composer:1.1 -f ./platform/php/Dockerfile .
-      - run: docker build -t ayenko4all/nginx-php:1.0 -f ./platform/nginx/Dockerfile .
-      - run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-      - run: docker push ayenko4all/php-composer:1.1
-      - run: docker push ayenko4all/nginx-php:1.0
+     
