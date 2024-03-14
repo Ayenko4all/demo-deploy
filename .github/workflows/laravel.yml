@@ -2,9 +2,9 @@ name: Deploy to docker hub
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "docker-compose" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "docker-compose" ]
 
 jobs:
   laravel-tests:
