@@ -13,6 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
+Route::redirect('/', 'api');
+Route::prefix('api')->group(function () {
+    Route::get('/', function () {
+        return response()->json([
+            'status' => 'success',
+            'data' => ['message' => 'Welcome to the Auth API'],
+        ]);
+    })->name('index');
+
 });

@@ -1,0 +1,36 @@
+version: '3'
+services:
+    #nginx
+    web:
+        build:
+            dockerfile: ./platform/nginx/Dockerfile
+        ports:
+            - "80:80"
+        volumes:
+          - ./platform/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf #map our nginx file to the default nginx file
+
+    # php
+    app:
+        build:
+            dockerfile: platform/php/Dockerfile
+            target: app
+        volumes:
+            - ./:/var/www/html
+
+    # mysql
+    db:
+        image: mysql:8.0
+        volumes:
+            - mysqldata:/var/lib/mysql
+        restart: always
+        environment:
+          MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+          MYSQL_DATABASE: '${DB_DATABASE}'
+          MYSQL_PASSWORD: '${DB_PASSWORD}'
+          MYSQL_USER: '${DB_USERNAME}'
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+
+    # redis
+
+volumes:
+  mysqldata:
