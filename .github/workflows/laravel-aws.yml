@@ -15,7 +15,7 @@ jobs:
       - uses: shivammathur/setup-php@2.9.0
         with:
           php-version: '8.2'
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.ci', '.env');"
       - name: Install Dependencies
@@ -27,7 +27,7 @@ jobs:
         working-directory: ./
         run: vendor/bin/phpunit
       - name: Set up AWS CLI
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.AWS_INSTANCE_IP }}
           username: ${{ secrets.USERNAME }}
