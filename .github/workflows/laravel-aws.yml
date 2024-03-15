@@ -33,4 +33,5 @@ jobs:
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.AWS_PORT }}
           key: ${{ secrets.AWS_SSH_KEY_ID }}
-          script: "cd /home/source && ./.scripts/deploy.sh"
+          script: |
+            cd /home/source && ./.scripts/deploy.sh
