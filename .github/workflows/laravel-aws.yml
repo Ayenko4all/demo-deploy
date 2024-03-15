@@ -8,7 +8,9 @@ on:
 
 jobs:
   laravel-tests:
+
     runs-on: ubuntu-latest
+
     steps:
       - uses: shivammathur/setup-php@2.9.0
         with:
@@ -24,22 +26,14 @@ jobs:
       - name: Execute tests via PHPUnit
         working-directory: ./
         run: vendor/bin/phpunit
-     -  name: Deploy to server
-        uses: appleboy/ssh-action@master
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-         host: ${{ secrets.AWS_INSTANCE_IP }}
-         username: ${{ secrets.USERNAME }}
-         port: ${{ secrets.AWS_PORT }}
-         key: ${{ secrets.AWS_SSH_KEY_ID }}
-         script: "cd /home/source && ./.scripts/deploy.sh"
-#      - name: Set up AWS CLI
-#        uses: aws-actions/configure-aws-credentials@v1
-#        with:
-#          host: ${{ secrets.AWS_INSTANCE_IP }}
-#          username: ${{ secrets.AWS_USERNAME }}
-#          key: ${{ secrets.AWS_SSH_KEY_ID }}
-#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#          aws-region: ${{ secrets.AWS_REGION }}
-#          aws-ssh-key-id: ${{ secrets.AWS_SSH_KEY_ID }}
-#          script: "cd /home/source && ./.scripts/deploy.sh
+          host: ${{ secrets.AWS_INSTANCE_IP }}
+          username: ${{ secrets.AWS_USERNAME }}
+          key: ${{ secrets.AWS_SSH_KEY_ID }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+          aws-ssh-key-id: ${{ secrets.AWS_SSH_KEY_ID }}
+          script: "cd /home/source && ./.scripts/deploy.sh
