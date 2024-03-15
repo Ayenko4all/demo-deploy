@@ -32,5 +32,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
+          aws-ssh-key-id: ${{ secrets.AWS_SSH_KEY_ID }}
       - name: Deploy to aws ec2
         run: ssh ${{ secrets.AWS_INSTANCE_IP }} "cd /home/source && git pull && composer install - no-dev && php artisan migrate - force && php artisan optimize"
