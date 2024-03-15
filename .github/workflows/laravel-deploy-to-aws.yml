@@ -26,4 +26,9 @@ jobs:
       - name: Execute tests via PHPUnit
         working-directory: ./
         run: vendor/bin/phpunit
-     
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+            - name: Deploy to AWS EC2
+          run: ssh ${{ secrets.AWS_INSTANCE_IP }} "cd /home/source && git pull && composer install - no-dev && php artisan migrate - force && php artisan optimize"
