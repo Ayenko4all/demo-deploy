@@ -7,8 +7,8 @@ on:
     branches: [ "deploy-to-aws-ec2" ]
 
 jobs:
-  deploy:
-  
+  laravel-tests:
+
     runs-on: ubuntu-latest
 
     steps:
