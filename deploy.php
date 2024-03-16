@@ -19,7 +19,7 @@ set('writable_mode', 'acl');
 set('writable_chmod_mode', '0755');
 
 // Hosts
-host('18.188.54.27')
+host('18.188.104.26')
     ->setRemoteUser('ubuntu')
     ->set('branch', 'deploy-to-aws-ec2')
     ->set('deploy_path', '~/var/www/current');
