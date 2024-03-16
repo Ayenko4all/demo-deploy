@@ -1,37 +1,28 @@
-name: Laravel Deployment
+name: deploy
 
 on:
   push:
-    branches: [ "deploy-to-aws-ec2" ]
-  pull_request:
-    branches: [ "deploy-to-aws-ec2" ]
+    branches: [deploy-to-aws-ec2]
+
+concurrency: production_environment
 
 jobs:
-  laravel-tests:
-
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: shivammathur/setup-php@2.9.0
-        with:
-          php-version: '8.2'
       - uses: actions/checkout@v3
-      - name: Copy .env
-        run: php -r "file_exists('.env') || copy('.env.ci', '.env');"
-      - name: Install Dependencies
-        working-directory: ./
-        run: composer install --prefer-dist
-      - name: Generate key
-        run: php artisan key:generate
-      - name: Execute tests via PHPUnit
-        working-directory: ./
-        run: vendor/bin/phpunit
-      - name: Set up AWS CLI
-        uses: appleboy/ssh-action@v1.0.3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
-          host: ${{ secrets.AWS_INSTANCE_IP }}
-          username: ${{ secrets.USERNAME }}
-          port: ${{ secrets.AWS_PORT }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd /home/source && ./.scripts/deploy.sh
+          php-version: "8.2"
+
+      - name: Install dependencies
+        run: composer install
+
+      - name: Deploy
+        uses: deployphp/action@v1
+        with:
+          private-key: ${{ secrets.AWS_PRIVATE_KEY }}
+        run: php vendor/bin/dep deploy
