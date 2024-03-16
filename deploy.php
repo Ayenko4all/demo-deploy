@@ -22,7 +22,7 @@ set('writable_chmod_mode', '0755');
 host('18.188.104.26')
     ->setRemoteUser('ubuntu')
     ->set('branch', 'deploy-to-aws-ec2')
-    ->set('deploy_path', '/var/www/current');
+    ->set('deploy_path', '/var/www/{{application}}');
 
 // Hooks
 task('build', function () {
