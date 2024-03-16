@@ -25,4 +25,4 @@ jobs:
         uses: deployphp/action@v1
         with:
           private-key: ${{ secrets.AWS_PRIVATE_KEY }}
-        run: php vendor/bin/dep deploy
+          dep: deploy
