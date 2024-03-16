@@ -19,7 +19,7 @@ set('writable_mode', 'chown');
 
 // Hosts
 host('18.188.54.27')
-    ->setRemoteUser('root')
+    ->setRemoteUser('ubuntu')
     ->set('branch', 'deploy-to-aws-ec2')
     ->set('composer_options', '{{composer_action}} --verbose --prefer-dist --no-progress --no-interaction --optimize-autoloader')
     ->set('deploy_path', '~/var/www/current');
