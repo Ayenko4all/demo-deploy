@@ -22,6 +22,8 @@ set('writable_chmod_mode', '0755');
 host('18.188.104.26')
     ->setRemoteUser('ubuntu')
     ->set('branch', 'deploy-to-aws-ec2')
+    ->set('composer_action', 'install')
+    ->set('composer_options', '--verbose --prefer-dist --no-progress --no-interaction --no-dev --optimize-autoloader')
     ->set('deploy_path', '/var/www/demo-deploy');
 
 // Hooks
