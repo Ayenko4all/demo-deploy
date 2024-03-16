@@ -11,7 +11,7 @@ set('application', 'Laravel-auth');
 // Project repo
 set('repository', 'https://github.com/Ayenko4all/lara-basic-auth-api.git');
 
-add('shared_files', []);
+set('shared_files', ['.env']);
 add('shared_dirs', []);
 add('writable_dirs', []);
 set('allow_anonymous_stats', false);
