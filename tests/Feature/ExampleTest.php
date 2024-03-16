@@ -16,6 +16,6 @@ class ExampleTest extends TestCase
     {
 
         $this->getJson(route('index'))
-            ->assertSeeText('Welcome to the Auth API');
+            ->assertSeeText('Welcome to the Laravel Auth API and is changes too');
     }
 }
