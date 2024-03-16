@@ -15,14 +15,14 @@ add('shared_files', []);
 add('shared_dirs', []);
 add('writable_dirs', []);
 set('allow_anonymous_stats', false);
-set('writable_mode', 'acl');
+set('writable_mode', 'chown');
 set('writable_chmod_mode', '0755');
 
 // Hosts
 host('18.188.104.26')
     ->setRemoteUser('ubuntu')
     ->set('branch', 'deploy-to-aws-ec2')
-    ->set('deploy_path', '/var/www/{{application}}');
+    ->set('deploy_path', '/var/www/demo-deploy');
 
 // Hooks
 task('build', function () {
