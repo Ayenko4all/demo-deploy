@@ -15,7 +15,7 @@ add('shared_files', []);
 add('shared_dirs', []);
 add('writable_dirs', []);
 set('allow_anonymous_stats', false);
-set('writable_mode', 'chown');
+set('writable_mode', 'acl');
 set('writable_chmod_mode', '0755');
 
 // Hosts
