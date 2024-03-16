@@ -25,5 +25,8 @@ host('18.188.54.27')
     ->set('deploy_path', '~/var/www/current');
 
 // Hooks
+task('build', function () {
+    run('cd {{release_path}} && build');
+});
 
 after('deploy:failed', 'deploy:unlock');
