@@ -1,32 +1,33 @@
-name: deploy
+name: Deploy
 
 on:
   push:
     branches: [deploy-to-aws-ec2]
-
-concurrency: production_environment
+  pull_request:
+    branches: [deploy-to-aws-ec2]
 
 jobs:
   deploy:
+
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup PHP
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.2"
+          php-version: '8.2'
+      - uses: actions/checkout@v3
       - name: Copy .env
-        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-      - name: Install dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+        run: php -r "file_exists('.env') || copy('.env.ci', '.env');"
+      - name: Install Dependencies
+        working-directory: ./
+        run: composer install --prefer-dist
       - name: Generate key
         run: php artisan key:generate
       - name: Execute tests via PHPUnit
+        working-directory: ./
         run: vendor/bin/phpunit
-      - uses: deployphp/action@v1
       - name: Deploy
-        with:
-          private-key: ${{ secrets.AWS_PRIVATE_KEY }}
-          dep: deploy
+          uses: deployphp/action@v1
+          with:
+            private-key: ${{ secrets.PRIVATE_KEY }}
+            dep: deploy
