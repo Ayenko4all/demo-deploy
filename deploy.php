@@ -22,7 +22,7 @@ set('writable_chmod_mode', '0755');
 host('18.188.54.27')
     ->setRemoteUser('ubuntu')
     ->set('branch', 'deploy-to-aws-ec2')
-    ->set('composer_options', '{{composer_action}} --verbose --prefer-dist --no-progress --no-interaction --optimize-autoloader')
+    ->set('composer_options', 'composer install --optimize-autoloader --no-dev')
     ->set('deploy_path', '~/var/www/current');
 
 // Hooks
