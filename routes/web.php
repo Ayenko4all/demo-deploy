@@ -22,7 +22,7 @@ Route::prefix('api')->group(function () {
     Route::get('/', function () {
         return response()->json([
             'status' => 'success',
-            'data' => ['message' => 'Welcome to the Laravel Auth API and is changes too'],
+            'data' => ['message' => 'Welcome to the Laravel Auth API.'],
         ]);
     })->name('index');
 
